@@ -9,9 +9,10 @@ import SwiftUI
 
 @main
 struct Oigetit_ReplicateApp: App {
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            AppRouterView()
         }
     }
 }
