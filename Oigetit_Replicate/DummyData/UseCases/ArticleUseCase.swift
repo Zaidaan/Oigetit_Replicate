@@ -27,11 +27,12 @@ class ArticleUseCaseImpl: ArticleUseCase {
         
         do {
             let data = try decodeNewsResponse(from: endpoint)
-            articles = data.articles.filter { article in
+            let newArticles: [Article] = data.articles.filter { article in
                 article.categories.contains { categoryInArray in
                     categoryInArray.lowercased() == category.lowercased()
                 }
             }
+            articles = newArticles.sorted { $0.publishedAt > $1.publishedAt }
             
         } catch {
             print("Failed to decode News: \(error)")
@@ -56,6 +57,7 @@ class ArticleUseCaseImpl: ArticleUseCase {
         }
         
         let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
         let response = try decoder.decode(ArticleResponse.self, from: jsonData)
         
         return (response.status, response.articles)

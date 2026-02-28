@@ -11,8 +11,9 @@ struct Article: Identifiable, Decodable {
     var id: String
     var title: String
     var thumbnail: String
+    var url: String?
     var categories: [String]
-    var publishedAt: String
+    var publishedAt: Date
     var publisher: String
     var score: NewsScore
 }

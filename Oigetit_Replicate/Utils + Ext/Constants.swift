@@ -7,6 +7,19 @@
 
 import SwiftUI
 
+func identifySentiment(sentiment: String) -> Sentiment {
+    switch sentiment {
+    case "positive":
+        return .positive
+    case "neutral":
+        return .neutral
+    case "negative":
+        return .negative
+    default:
+        return .neutral
+    }
+}
+
 enum Sentiment {
     case positive
     case neutral

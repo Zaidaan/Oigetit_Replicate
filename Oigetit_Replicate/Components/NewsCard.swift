@@ -11,7 +11,10 @@ struct NewsCard: View {
     let article: Article
     @State var hasMediaLoaded: Bool = false
     @State var isMediaVisible: Bool = true
+    
     var body: some View {
+        let sentiment = identifySentiment(sentiment: article.score.sentiment)
+        
         VStack(alignment: .leading, spacing: 12){
             HStack{
                 VStack(alignment: .leading){
@@ -28,7 +31,7 @@ struct NewsCard: View {
                             .lineLimit(1)
                         Circle()
                             .frame(width: 4, height: 4)
-                        Text(article.publishedAt)
+                        Text(article.publishedAt.timeAgoDisplay())
                     }
                     .font(Font.caption2)
                     .foregroundStyle(.gray)
@@ -82,11 +85,11 @@ struct NewsCard: View {
             
             HStack{
                 HStack{
-                    Image(systemName: Sentiment.positive.icon)
+                    Image(systemName: sentiment.icon)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 20)
-                        .foregroundStyle(Sentiment.positive.color)
+                        .foregroundStyle(sentiment.color)
                     Text("Sentiment")
                         .font(Font.caption)
                         .fontWeight(.semibold)

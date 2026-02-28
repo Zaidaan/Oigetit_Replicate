@@ -20,10 +20,9 @@ struct NewsListView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack{
                     ForEach(dummyCategories) { category in
-                        CategoryChip(newsCategory: category, selectedCategoryId: $viewModel.selectedCategoryId)
-                            .onTapGesture {
-                                viewModel.updateArticles(category: category.id)
-                            }
+                        CategoryChip(newsCategory: category, selectedCategoryId: $viewModel.selectedCategoryId) { selectedCategoryId in
+                            viewModel.updateArticles(category: selectedCategoryId)
+                        }
                     }
                 }
                 .padding(.horizontal, 8)
