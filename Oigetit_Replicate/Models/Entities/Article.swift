@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Article: Identifiable, Decodable {
+struct Article: Identifiable, Decodable, Hashable {
     var id: String
     var title: String
     var thumbnail: String

@@ -33,6 +33,9 @@ struct NewsListView: View {
                     LazyVStack(spacing: 12){
                         ForEach(viewModel.articles.enumerated(), id: \.offset) { index, article in
                             NewsCard(article: article)
+                                .onTapGesture {
+                                    router.push(.articleDetail(article: article))
+                                }
                         }
                     }
                     .padding(.horizontal, 12)
@@ -43,6 +46,7 @@ struct NewsListView: View {
         .ignoresSafeArea(edges: .bottom)
         .padding(.top, 12)
         .background(Color.gray.opacity(0.2))
+        .navigationBarTitleDisplayMode(.inline)
         .toolbar{
             ToolbarItem(placement: .principal) {
                 VStack{
@@ -79,4 +83,5 @@ struct NewsListView: View {
 
 #Preview {
     AppRouterView(previewPage: .newsList(category: "breaking"))
+    
 }

@@ -26,7 +26,6 @@ struct CategoryChip: View {
                 .font(.system(size: 11, weight: .regular))
                 .lineLimit(1)
                 .minimumScaleFactor(0.5)
-                .frame(width: .infinity)
                 .padding(.horizontal, 4)
                 
         }
@@ -39,4 +38,5 @@ struct CategoryChip: View {
         }
     }
 }
+
 

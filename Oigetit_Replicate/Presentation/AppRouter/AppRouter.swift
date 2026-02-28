@@ -10,7 +10,7 @@ import Combine
 
 enum Page: Hashable, Identifiable {
     case newsList(category: String)
-    case articleDetail
+    case articleDetail(article: Article)
     
     var id: String {
         switch self {
@@ -33,7 +33,7 @@ class AppRouter: ObservableObject {
     }
     
     func pop(){
-        path.removeLast()
+        if path.isEmpty { return } else {path.removeLast()}
     }
     
     func popToRoot(){
@@ -46,8 +46,8 @@ class AppRouter: ObservableObject {
         switch page {
         case .newsList(let category):
             NewsListView(category: category)
-        case .articleDetail:
-            ArticleDetailView()
+        case .articleDetail(let article):
+            ArticleDetailView(article: article)
         }
     }
 }

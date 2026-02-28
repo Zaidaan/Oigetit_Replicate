@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct NewsScore: Identifiable, Decodable {
+struct NewsScore: Identifiable, Decodable, Hashable {
     var id: UUID = UUID()
     var reliability: Int
     var sentiment: String

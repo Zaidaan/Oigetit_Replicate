@@ -26,5 +26,6 @@ struct AppRouterView: View {
                 .toolbarBackgroundVisibility(.visible, for: .navigationBar)
         }
         .environmentObject(router)
+        .preferredColorScheme(ColorScheme.light)
     }
 }
