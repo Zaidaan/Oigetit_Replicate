@@ -10,7 +10,7 @@ import SwiftUI
 struct CategoryChip: View {
     let newsCategory: NewsCategory
     @Binding var selectedCategoryId: String
-    let completion: (String) -> Void
+    let handleSelection: (String) -> Void
     private var isSelected: Bool {
         selectedCategoryId == newsCategory.id
     }
@@ -34,7 +34,7 @@ struct CategoryChip: View {
         .clipShape(RoundedRectangle(cornerRadius: 8))
         .onTapGesture {
             selectedCategoryId = newsCategory.id
-            completion(selectedCategoryId)
+            handleSelection(selectedCategoryId)
         }
     }
 }

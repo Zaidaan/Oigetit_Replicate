@@ -32,7 +32,7 @@ struct NewsListView: View {
                 ScrollView(.vertical){
                     LazyVStack(spacing: 12){
                         ForEach(viewModel.articles.enumerated(), id: \.offset) { index, article in
-                            NewsCard(article: article)
+                            NewsCard(article: article, isLoading: $viewModel.isLoading)
                                 .onTapGesture {
                                     router.push(.articleDetail(article: article))
                                 }
