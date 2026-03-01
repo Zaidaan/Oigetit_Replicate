@@ -21,7 +21,11 @@ struct NewsListView: View {
                 HStack{
                     ForEach(dummyCategories) { category in
                         CategoryChip(newsCategory: category, selectedCategoryId: $viewModel.selectedCategoryId) { selectedCategoryId in
-                            viewModel.updateArticles(category: selectedCategoryId)
+                            viewModel.isLoading = true
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                                viewModel.updateArticles(category: selectedCategoryId)
+                                viewModel.isLoading = false
+                            }
                         }
                     }
                 }
@@ -30,18 +34,37 @@ struct NewsListView: View {
             
             TabView(selection: $viewModel.selectedCategoryId) {
                 ScrollView(.vertical){
-                    LazyVStack(spacing: 12){
-                        ForEach(viewModel.articles.enumerated(), id: \.offset) { index, article in
-                            NewsCard(article: article, isLoading: $viewModel.isLoading)
-                                .onTapGesture {
-                                    router.push(.articleDetail(article: article))
-                                }
+                    
+                    if viewModel.isLoading {
+                        VStack {
+                            ForEach(0..<6, id: \.self) { _ in
+                                SkeletonNewsCard()
+                            }
                         }
+                        .padding(.horizontal, 12)
+                        
+                    } else {
+                        LazyVStack{
+                            ForEach(viewModel.articles.enumerated(), id: \.offset) { index, article in
+                                NewsCard(article: article)
+                                    .onTapGesture {
+                                        router.push(.articleDetail(article: article))
+                                    }
+                            }
+                        }
+                        .padding(.horizontal, 12)
                     }
-                    .padding(.horizontal, 12)
+                    
                 }
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
+        }
+        .onAppear {
+            // simulating fetch loading
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                viewModel.updateArticles(category: viewModel.selectedCategoryId)
+                viewModel.isLoading = false
+            }
         }
         .ignoresSafeArea(edges: .bottom)
         .padding(.top, 12)

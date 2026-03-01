@@ -13,7 +13,7 @@ import Network
 class NewsListViewModel: ObservableObject {
     @Published var selectedCategoryId: String = "breaking"
     @Published var articles: [Article] = []
-    @Published var isLoading: Bool = false
+    @Published var isLoading: Bool = true
     
     private let networkMonitor = NWPathMonitor()
     private let queue = DispatchQueue(label: "com.Oigetit-Replicate.networkQueue")
@@ -37,6 +37,7 @@ class NewsListViewModel: ObservableObject {
     func updateArticles(category: String) {
         if isConnected {
             self.articles = ArticleUseCaseImpl(with: category).articles
+//            isLoading = false
         } else {
             print("There is no internet connection, can't update article")
             // some handler, maybe use caching logic
