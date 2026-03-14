@@ -15,17 +15,22 @@ struct NewsCard: View {
     
     var body: some View {
         let sentiment = identifySentiment(sentiment: article.score.sentiment)
-        VStack(alignment: .leading, spacing: 12){
+        VStack(alignment: .leading, spacing: 8){
             HStack{
                 VStack(alignment: .leading){
                     HStack(alignment: .center){
                         ReliabilityScore(score: article.score.reliability)
                         Text("Reliability\nScore")
-                            .font(Font.footnote)
+                            .font(Font.caption)
+                            .fontWeight(Font.Weight.medium)
+                            .foregroundStyle(Color.gray)
                     }
                     Text(article.title)
                         .font(Font.headline)
                         .lineLimit(3)
+                    
+                    Spacer()
+                    
                     HStack{
                         Text(article.publisher)
                             .lineLimit(1)
@@ -37,6 +42,8 @@ struct NewsCard: View {
                     .foregroundStyle(.gray)
                 }
                 
+                Spacer()
+                
                 if isMediaVisible {
                     
                     if let url = URL(string: article.thumbnail) {
@@ -46,14 +53,14 @@ struct NewsCard: View {
                             case .empty:
                                 Color.clear
                                     .frame(maxWidth: .infinity)
-                                    .aspectRatio(5/4, contentMode: .fit)
+                                    .aspectRatio(7/6, contentMode: .fit)
                                     .clipShape(RoundedRectangle(cornerRadius: 8))
                                     .redacted(reason: .placeholder)
                             case .success(let image):
                                 image
                                     .resizable()
-                                    .frame(maxWidth: .infinity)
-                                    .aspectRatio(5/4, contentMode: .fit)
+                                    .frame(maxWidth: 150)
+                                    .aspectRatio(4/3, contentMode: .fit)
                                     .clipShape(RoundedRectangle(cornerRadius: 8))
                                     .onAppear {
                                         hasMediaLoaded = true
@@ -88,22 +95,22 @@ struct NewsCard: View {
             Divider()
             
             HStack{
-                HStack{
-                    Image(systemName: sentiment.icon)
+                HStack(spacing: 6){
+                    Image(sentiment.icon)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 20)
                         .foregroundStyle(sentiment.color)
                     Text("Sentiment")
                         .font(Font.caption)
-                        .fontWeight(.semibold)
+                        .fontWeight(.medium)
                     Button{
                         
                     } label: {
                         Image(systemName: "questionmark.circle")
                             .resizable()
                             .aspectRatio(1/1, contentMode: .fit)
-                            .frame(width: 15)
+                            .frame(width: 12)
                             .foregroundStyle(Color.gray)
                     }
                 }
@@ -111,27 +118,32 @@ struct NewsCard: View {
                 Spacer()
                 
                 HStack(alignment: .center, spacing: 16) {
-                    Image(systemName: "hand.thumbsup")
-                        .resizable()
-                        .aspectRatio( contentMode: .fit)
-                        .frame(width: 20)
-                    
-                    Image(systemName: "bubble")
+                    Image(systemName: IconSet.like)
                         .resizable()
                         .aspectRatio(1/1, contentMode: .fit)
                         .frame(width: 20)
+                        .fontWeight(Font.Weight.light)
                     
-                    Image(systemName: "arrowshape.turn.up.forward")
+                    Image(systemName: IconSet.comment)
                         .resizable()
                         .aspectRatio(1/1, contentMode: .fit)
                         .frame(width: 20)
+                        .fontWeight(Font.Weight.light)
                     
-                    Image(systemName: "ellipsis")
+                    Image(systemName: IconSet.share)
+                        .resizable()
+                        .aspectRatio(1/1, contentMode: .fit)
+                        .frame(width: 20)
+                        .fontWeight(Font.Weight.light)
+                    
+                    Image(systemName: IconSet.more)
                         .resizable()
                         .rotationEffect(Angle(degrees: 90))
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 20)
+                        .fontWeight(Font.Weight.black)
                 }
+                
                 .foregroundStyle(Color.gray)
             }
         }

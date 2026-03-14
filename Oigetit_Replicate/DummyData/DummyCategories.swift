@@ -8,12 +8,12 @@
 import Foundation
 
 let dummyCategories: [NewsCategory] = [
-    NewsCategory(topicTitle: "Breaking", topicIcon: "globe"),
-    NewsCategory(topicTitle: "Video", topicIcon: "play.circle"),
-    NewsCategory(topicTitle: "AI News", topicIcon: "rectangle.3.group.bubble"),
-    NewsCategory(topicTitle: "Entertainment", topicIcon: "flag.and.flag.filled.crossed"),
-    NewsCategory(topicTitle: "Sports", topicIcon: "globe"),
-    NewsCategory(topicTitle: "Conservative", topicIcon: "play.circle"),
-    NewsCategory(topicTitle: "Liberal", topicIcon: "rectangle.3.group.bubble"),
-    NewsCategory(topicTitle: "Technology", topicIcon: "dot.radiowaves.left.and.right"),
+    NewsCategory(topicTitle: "Breaking", topicIcon: IconSet.breakingNews),
+    NewsCategory(topicTitle: "Video", topicIcon: IconSet.video),
+    NewsCategory(topicTitle: "AI News", topicIcon: IconSet.aiNews),
+    NewsCategory(topicTitle: "Entertainment", topicIcon: IconSet.entertainment),
+    NewsCategory(topicTitle: "Sports", topicIcon: IconSet.sports),
+    NewsCategory(topicTitle: "Conservative", topicIcon: IconSet.conservatives),
+    NewsCategory(topicTitle: "Liberal", topicIcon: IconSet.liberal),
+    NewsCategory(topicTitle: "Technology", topicIcon: IconSet.technology),
 ]

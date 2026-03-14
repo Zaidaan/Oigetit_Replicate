@@ -130,7 +130,7 @@ struct ArticleDetailView: View {
                 viewModel.content = await viewModel.fetchContent()
             }
         }
-        .toolbarBackground(Color.blue.opacity(0.7), for: .navigationBar)
+        .toolbarBackground(ColorSet.blue, for: .navigationBar)
         .toolbarBackgroundVisibility(.visible, for: .navigationBar)
         .navigationBarBackButtonHidden(true)
         .navigationBarTitleDisplayMode(.inline)
@@ -146,9 +146,12 @@ struct ArticleDetailView: View {
             .sharedBackgroundVisibility(.hidden)
             ToolbarItem(placement: .principal) {
                 VStack{
-                    Text("Oigetit")
-                        .font(Font.title)
-                        .fontWeight(.semibold)
+                    Image("OigetitLogo")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+//                    Text("Oigetit")
+//                        .font(Font.title)
+//                        .fontWeight(.semibold)
                     Text("Your Daily Fact-checked News")
                         .font(Font.caption)
                 }

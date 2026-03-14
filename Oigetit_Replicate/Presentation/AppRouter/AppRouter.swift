@@ -18,6 +18,7 @@ enum Page: Hashable, Identifiable {
         case .articleDetail: return "News Detail"
         }
     }
+    
 }
 
 class AppRouter: ObservableObject {

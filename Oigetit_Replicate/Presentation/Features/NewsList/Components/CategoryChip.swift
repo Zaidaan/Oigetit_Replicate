@@ -20,8 +20,9 @@ struct CategoryChip: View {
             Image(systemName: newsCategory.topicIcon)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
-                .frame(width: 30, height: 30)
+                .frame(width: 25, height: 30)
                 .foregroundStyle(Color.black.opacity(0.3))
+                .fontWeight(Font.Weight.light)
             Text(newsCategory.topicTitle)
                 .font(.system(size: 11, weight: .regular))
                 .lineLimit(1)
@@ -30,7 +31,7 @@ struct CategoryChip: View {
                 
         }
         .frame(width: 70, height: 60)
-        .background(isSelected ? Color.blue.opacity(0.6) : Color.white) // don't forget to change the color
+        .background(isSelected ? ColorSet.blue : Color.white)
         .clipShape(RoundedRectangle(cornerRadius: 8))
         .onTapGesture {
             selectedCategoryId = newsCategory.id
