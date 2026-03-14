@@ -11,6 +11,9 @@ struct NewsListView: View {
     @EnvironmentObject private var router: AppRouter
     @StateObject var viewModel: NewsListViewModel
     
+    @State var isShowModal = false
+    
+    
     init(category: String) {
         _viewModel = StateObject(wrappedValue: NewsListViewModel(category: category))
     }
@@ -44,7 +47,7 @@ struct NewsListView: View {
                         .padding(.horizontal, 12)
                         
                     } else {
-                        LazyVStack{
+                        LazyVStack(spacing: 12){
                             ForEach(viewModel.articles.enumerated(), id: \.offset) { index, article in
                                 NewsCard(article: article)
                                     .onTapGesture {
@@ -59,12 +62,25 @@ struct NewsListView: View {
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
         }
+        .fullScreenCover(isPresented: $isShowModal) {
+            RateInfoModal()
+            .presentationBackground(.clear)
+        }
+
         .onAppear {
-            // simulating fetch loading
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                viewModel.updateArticles(category: viewModel.selectedCategoryId)
-                viewModel.isLoading = false
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0){
+                var transaction = Transaction()
+                transaction.disablesAnimations = true
+                withTransaction(transaction) {
+                    isShowModal = true
+                }
             }
+            
+            // simulating fetch loading
+            //            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            //                viewModel.updateArticles(category: viewModel.selectedCategoryId)
+            //                viewModel.isLoading = false
+            //            }
         }
         .ignoresSafeArea(edges: .bottom)
         .padding(.top, 12)
@@ -73,9 +89,9 @@ struct NewsListView: View {
         .toolbar{
             ToolbarItem(placement: .principal) {
                 VStack{
-                    Text("Oigetit")
-                     .font(Font.title)
-                     .fontWeight(.semibold)
+                    Image("OigetitLogo")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
                     Text("Fake News Filter")
                         .font(Font.caption)
                 }
@@ -100,6 +116,7 @@ struct NewsListView: View {
             }
             .sharedBackgroundVisibility(.hidden)
         }
+        
     }
 }
 

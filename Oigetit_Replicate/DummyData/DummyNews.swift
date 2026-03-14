@@ -78,7 +78,7 @@ let dummyNews = """
       "publishedAt": "2026-02-28T10:05:00Z",
       "publisher": "AstroWeekly",
       "score": {
-          "reliability": 100,
+          "reliability": 90,
           "sentiment": "negative"
         }
     },

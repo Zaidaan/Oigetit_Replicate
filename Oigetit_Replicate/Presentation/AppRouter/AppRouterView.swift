@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AppRouterView: View {
-    @StateObject private var router =  AppRouter()
+    @StateObject private var router = AppRouter()
     
     private var previewPage: Page?
     
@@ -22,7 +22,8 @@ struct AppRouterView: View {
                 .navigationDestination(for: Page.self) {page in
                     router.build(page: page)
                 }
-                .toolbarBackground(Color.blue.opacity(0.7), for: .navigationBar)
+//                .ignoresSafeArea(edges: .all)
+                .toolbarBackground(ColorSet.blue, for: .navigationBar)
                 .toolbarBackgroundVisibility(.visible, for: .navigationBar)
         }
         .environmentObject(router)

@@ -21,7 +21,7 @@ class ArticleDetailViewModel: ObservableObject {
     func fetchContent(url: String = "") async -> String {
         if let endpoint = URL(string: url) {
             do {
-                let (data, _) = try await URLSession.shared.data(from: endpoint)
+                let (_, _) = try await URLSession.shared.data(from: endpoint)
                 /*
                  let decodedData = try JSONDecoder().decode(Content.self, from: data)
                  DispatchQueue.main.async{

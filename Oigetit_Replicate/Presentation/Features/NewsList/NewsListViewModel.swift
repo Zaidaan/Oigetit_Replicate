@@ -13,7 +13,7 @@ import Network
 class NewsListViewModel: ObservableObject {
     @Published var selectedCategoryId: String = "breaking"
     @Published var articles: [Article] = []
-    @Published var isLoading: Bool = true
+    @Published var isLoading: Bool = false
     
     private let networkMonitor = NWPathMonitor()
     private let queue = DispatchQueue(label: "com.Oigetit-Replicate.networkQueue")
@@ -31,6 +31,7 @@ class NewsListViewModel: ObservableObject {
                 self?.isConnected = path.status == .satisfied
             }
         }
+        
         networkMonitor.start(queue: queue)
     }
     
