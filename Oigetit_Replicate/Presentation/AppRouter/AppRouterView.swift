@@ -21,10 +21,11 @@ struct AppRouterView: View {
             router.build(page: previewPage ?? .newsList(category: "breaking"))
                 .navigationDestination(for: Page.self) {page in
                     router.build(page: page)
+                        .background(ColorSet.gray)
                 }
-//                .ignoresSafeArea(edges: .all)
-                .toolbarBackground(ColorSet.blue, for: .navigationBar)
-                .toolbarBackgroundVisibility(.visible, for: .navigationBar)
+                .toolbarBackgroundVisibility(.hidden, for: .navigationBar)
+            .background(ColorSet.gray)
+                
         }
         .environmentObject(router)
         .preferredColorScheme(ColorScheme.light)

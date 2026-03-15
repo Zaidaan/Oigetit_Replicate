@@ -26,11 +26,13 @@ struct ArticleDetailView: View {
                 Spacer()
                 
                 HStack{
-                    Image(systemName: sentiment.icon)
+                    Image(sentiment.icon)
                         .resizable()
+                        .renderingMode(.template)
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 20)
+                        .frame(width: 25)
                         .foregroundStyle(sentiment.color)
+                        .shadow(color: sentiment.color, radius: 0.5)
                     Text("Sentiment")
                         .font(Font.caption)
                         .fontWeight(.semibold)
@@ -45,13 +47,14 @@ struct ArticleDetailView: View {
                     }
                 }
             }
-            
             .padding(.vertical, 8)
             .padding(.horizontal, 12)
+            .background(Color.white)
             .overlay(
                 Rectangle()
                     .stroke(Color.blue, lineWidth: 1.5)
             )
+            
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
                     
@@ -123,13 +126,18 @@ struct ArticleDetailView: View {
                     }
                     .padding(.horizontal)
                 }
+                .background(Color.white)
             }
         }
+        .ignoresSafeArea(edges: .bottom)
         .onAppear{
             Task {
                 viewModel.content = await viewModel.fetchContent()
             }
         }
+//        .safeAreaInset(edge: .top, spacing: 0){
+//            CustomAppBar()
+//        }
         .toolbarBackground(ColorSet.blue, for: .navigationBar)
         .toolbarBackgroundVisibility(.visible, for: .navigationBar)
         .navigationBarBackButtonHidden(true)
@@ -149,11 +157,9 @@ struct ArticleDetailView: View {
                     Image("OigetitLogo")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-//                    Text("Oigetit")
-//                        .font(Font.title)
-//                        .fontWeight(.semibold)
+                        .frame(width: 90)
                     Text("Your Daily Fact-checked News")
-                        .font(Font.caption)
+                        .font(Font.caption2.bold())
                 }
                 .foregroundStyle(Color.white)
                 
