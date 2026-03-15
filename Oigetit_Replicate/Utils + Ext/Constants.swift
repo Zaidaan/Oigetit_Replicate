@@ -39,12 +39,32 @@ class IconSet {
     static let liberal                  = "arcade.stick.and.arrow.right"
     static let technology               = "bolt"
     
+    // country flag icons
+    static let usa                      = "usaFlag"
+    static let china                    = "chinaFlag"
+    static let germany                  = "germanyFlag"
+    static let india                    = "indiaFlag"
+    static let france                   = "franceFlag"
+    static let spain                    = "spainFlag"
+    static let global                   = "global"
+    
     // misc
     static let square                   = "square"
     static let checkboxFill             = "checkmark.square.fill"
+    static let profile                  = "person.crop.circle"
+    static let magnifyingGlass          = "magnifyingglass"
+    static let chevronDown              = "chevron.down"
+    static let menu                     = "line.3.horizontal"
+}
+
+class ImageSet {
+    static let oigetitLogo              = "OigetitLogo"
 }
 
 class ColorSet {
+    
+    // neutral color
+    static let gray                     = Color("Gray")
     
     // primary color
     static let blue                     = Color("Blue")
@@ -55,4 +75,6 @@ class ColorSet {
     // component color
     static let blueButton               = Color("blueButton")
 }
+
+
 

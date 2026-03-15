@@ -32,6 +32,7 @@ struct NewsListView: View {
                 }
                 .padding(.horizontal, 8)
             }
+            .padding(.top, 4)
             
             TabView(selection: $viewModel.selectedCategoryId) {
                 ScrollView(.vertical){
@@ -60,6 +61,10 @@ struct NewsListView: View {
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
         }
+        .safeAreaInset(edge: .top){
+            CustomAppBar()
+                
+        }
         .fullScreenCover(isPresented: $viewModel.isShowModal) {
             RateInfoModal(isShowModal: $viewModel.isShowModal)
             .presentationBackground(.clear)
@@ -81,40 +86,6 @@ struct NewsListView: View {
             //            }
         }
         .ignoresSafeArea(edges: .bottom)
-        .padding(.top, 12)
-        .background(Color.gray.opacity(0.2))
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar{
-            ToolbarItem(placement: .principal) {
-                VStack{
-                    Image("OigetitLogo")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                    Text("Fake News Filter")
-                        .font(Font.caption)
-                }
-                .foregroundStyle(Color.white)
-                
-            }
-            .sharedBackgroundVisibility(.hidden)
-            ToolbarItem(placement: .topBarTrailing) {
-                Button{
-                    
-                } label: {
-                    HStack(spacing: 4){
-                        Text("USA")
-                            .font(Font.subheadline)
-                            .fontWeight(.semibold)
-                        Image(systemName: "chevron.down")
-                            .font(Font.caption2)
-                            .fontWeight(.semibold)
-                    }
-                    .foregroundStyle(Color.white)
-                }
-            }
-            .sharedBackgroundVisibility(.hidden)
-        }
-        
     }
 }
 
