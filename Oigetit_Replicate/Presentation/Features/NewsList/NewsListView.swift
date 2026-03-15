@@ -11,8 +11,6 @@ struct NewsListView: View {
     @EnvironmentObject private var router: AppRouter
     @StateObject var viewModel: NewsListViewModel
     
-    @State var isShowModal = false
-    
     
     init(category: String) {
         _viewModel = StateObject(wrappedValue: NewsListViewModel(category: category))
@@ -62,8 +60,8 @@ struct NewsListView: View {
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
         }
-        .fullScreenCover(isPresented: $isShowModal) {
-            RateInfoModal()
+        .fullScreenCover(isPresented: $viewModel.isShowModal) {
+            RateInfoModal(isShowModal: $viewModel.isShowModal)
             .presentationBackground(.clear)
         }
 
@@ -72,7 +70,7 @@ struct NewsListView: View {
                 var transaction = Transaction()
                 transaction.disablesAnimations = true
                 withTransaction(transaction) {
-                    isShowModal = true
+                    viewModel.isShowModal = UserDefaults.standard.bool(forKey: UserDefaultsKey.isShowHomeModal)
                 }
             }
             

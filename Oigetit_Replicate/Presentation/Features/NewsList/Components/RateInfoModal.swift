@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct RateInfoModal: View {
+    @Binding var isShowModal: Bool
+    
+    @State var isDontShowChecked: Bool = false
     @State var contentOpacity = 0.0
     
     var body: some View {
@@ -16,7 +19,7 @@ struct RateInfoModal: View {
                 .ignoresSafeArea(edges: .all)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .foregroundStyle(Color.black.opacity(0.3))
-                .opacity(contentOpacity)
+                
             
             VStack {
                 VStack(alignment: .center, spacing: 28) {
@@ -24,6 +27,18 @@ struct RateInfoModal: View {
                         HStack {
                             Spacer()
                             Button{
+                                
+                                withAnimation(.easeInOut(duration: 0.5)){
+                                    contentOpacity = 0.0
+                                }
+                                
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
+                                    var transaction = Transaction()
+                                    transaction.disablesAnimations = true
+                                    withTransaction(transaction) {
+                                        isShowModal = false
+                                    }
+                                }
                                 
                             } label: {
                                 Image(systemName: "xmark")
@@ -69,11 +84,12 @@ struct RateInfoModal: View {
                         
                         HStack{
                             Button {
-                                
+                                isDontShowChecked.toggle()
+                                UserDefaults.standard.set(!isDontShowChecked, forKey: UserDefaultsKey.isShowHomeModal)
                             } label: {
-                                Image(systemName: "square")
+                                Image(systemName: isDontShowChecked ? IconSet.checkboxFill: IconSet.square)
                                     .font(.title.weight(.light))
-                                    .foregroundStyle(Color.gray)
+                                    .foregroundStyle(isDontShowChecked ? ColorSet.blue : Color.gray)
                             }
                             Text("Don't show this screen again")
                                 .font(.subheadline.weight(.light))
@@ -87,6 +103,7 @@ struct RateInfoModal: View {
             }
             .padding(.horizontal, 20)
         }
+        .opacity(contentOpacity)
         
         .onAppear {
             withAnimation(.easeInOut(duration: 0.5)) {
@@ -121,7 +138,7 @@ private struct RateDescription: View {
                 Image(systemName: IconSet.shieldOutline)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: 25)
+                    .frame(width: 24)
                     .foregroundStyle(Color.white)
                 Image(systemName: rateAttributes.3)
                     .resizable()
@@ -149,6 +166,3 @@ private struct RateDescription: View {
 }
 
 
-#Preview {
-    RateInfoModal()
-}

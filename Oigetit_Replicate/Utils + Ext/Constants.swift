@@ -38,6 +38,10 @@ class IconSet {
     static let conservatives            = "arcade.stick.and.arrow.left"
     static let liberal                  = "arcade.stick.and.arrow.right"
     static let technology               = "bolt"
+    
+    // misc
+    static let square                   = "square"
+    static let checkboxFill             = "checkmark.square.fill"
 }
 
 class ColorSet {

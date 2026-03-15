@@ -8,12 +8,14 @@
 import Combine
 import Foundation
 import Network
+import SwiftUI
 
 
 class NewsListViewModel: ObservableObject {
     @Published var selectedCategoryId: String = "breaking"
     @Published var articles: [Article] = []
     @Published var isLoading: Bool = false
+    @Published var isShowModal = false
     
     private let networkMonitor = NWPathMonitor()
     private let queue = DispatchQueue(label: "com.Oigetit-Replicate.networkQueue")
