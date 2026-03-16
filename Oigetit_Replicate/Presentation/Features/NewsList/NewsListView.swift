@@ -35,47 +35,52 @@ struct NewsListView: View {
             .padding(.top, 4)
             
             TabView(selection: $viewModel.selectedCategoryId) {
-                ScrollView(.vertical){
-                    
-                    if viewModel.isLoading {
-                        VStack {
-                            ForEach(0..<6, id: \.self) { _ in
-                                SkeletonNewsCard()
-                            }
-                        }
-                        .padding(.horizontal, 12)
+                ForEach(dummyCategories, id: \.id) {category in
+                    ScrollView(.vertical){
                         
-                    } else {
-                        LazyVStack(spacing: 12){
-                            ForEach(viewModel.articles.enumerated(), id: \.offset) { index, article in
-                                NewsCard(article: article)
-                                    .onTapGesture {
-                                        router.push(.articleDetail(article: article))
-                                    }
+                        if viewModel.isLoading {
+                            VStack {
+                                ForEach(0..<6, id: \.self) { _ in
+                                    SkeletonNewsCard()
+                                }
                             }
+                            .padding(.horizontal, 12)
+                            
+                        } else {
+                            LazyVStack(spacing: 12){
+                                ForEach(viewModel.articles.enumerated(), id: \.offset) { index, article in
+                                    NewsCard(article: article)
+                                        .onTapGesture {
+                                            router.push(.articleDetail(article: article))
+                                        }
+                                }
+                            }
+                            .padding(.horizontal, 12)
                         }
-                        .padding(.horizontal, 12)
+                        
                     }
-                    
+                    .tag(category)
                 }
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
+            .onChange(of: viewModel.selectedCategoryId){ _, newCategoryId in
+                viewModel.isLoading = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                    viewModel.updateArticles(category: newCategoryId)
+                    viewModel.isLoading = false
+                }
+            }
         }
         .safeAreaInset(edge: .top){
             CustomAppBar()
                 
         }
-        .fullScreenCover(isPresented: $viewModel.isShowModal) {
-            RateInfoModal(isShowModal: $viewModel.isShowModal)
-            .presentationBackground(.clear)
-        }
 
         .onAppear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0){
-                var transaction = Transaction()
-                transaction.disablesAnimations = true
-                withTransaction(transaction) {
-                    viewModel.isShowModal = UserDefaults.standard.bool(forKey: UserDefaultsKey.isShowHomeModal)
+            let isPresentHomeModal = UserDefaults.standard.bool(forKey: UserDefaultsKey.isShowHomeModal)
+            if isPresentHomeModal == true {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0){
+                    router.present(fullScreenCover: .reliabilityRateInfoModal)
                 }
             }
             
