@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ArticleCommentSheet: View {
+    @Environment(\.colorScheme) var colorScheme
     
     @State var commentCount: Int = 0
     var body: some View {
@@ -31,7 +32,6 @@ struct ArticleCommentSheet: View {
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 30)
                             .fontWeight(.light)
-                            .foregroundStyle(Color.black)
                         
                         TextField("Comment", text: .constant(""))
                             .autocorrectionDisabled(true)
@@ -55,7 +55,7 @@ struct ArticleCommentSheet: View {
                 .padding(.horizontal, 10)
                 .overlay(
                     RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color.black, lineWidth: 0.5)
+                        .stroke(colorScheme == .light ? .black : .white, lineWidth: 0.5)
                 )
             }
             .padding(.horizontal, 16)

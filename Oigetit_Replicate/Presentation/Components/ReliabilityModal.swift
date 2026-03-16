@@ -81,7 +81,7 @@ struct ReliabilityModal: View {
                 }
                 .padding(.vertical,16)
                 .padding(.horizontal,16)
-                .background(Color.white)
+                .background(ColorSet.white)
                 .clipShape(RoundedRectangle(cornerRadius: 12))
                 .overlay(
                     VStack{
@@ -124,8 +124,3 @@ struct ReliabilityModal: View {
 }
 
 
-#Preview {
-    var score: Int = 80
-    
-    ReliabilityModal(score: score)
-}

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ArticleDetailView: View {
+    @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var router: AppRouter
     @StateObject var viewModel: ArticleDetailViewModel
     
@@ -53,10 +54,18 @@ struct ArticleDetailView: View {
             }
             .padding(.vertical, 8)
             .padding(.horizontal, 12)
-            .background(Color.white)
+            .background(ColorSet.white)
             .overlay(
                 Rectangle()
-                    .stroke(Color.blue, lineWidth: 1.5)
+                    .frame(height: 2)
+                    .foregroundColor(ColorSet.blue),
+                alignment: .top
+            )
+            .overlay(
+                Rectangle()
+                    .frame(height: 2)
+                    .foregroundColor(ColorSet.blue),
+                alignment: .bottom
             )
             
             ScrollView {
@@ -105,7 +114,7 @@ struct ArticleDetailView: View {
                         Text(viewModel.article.categories.first?.uppercased() ?? "NEWS")
                             .font(.caption)
                             .fontWeight(.bold)
-                            .foregroundColor(.blue)
+                            .foregroundColor(ColorSet.blue)
                         
                         Text(viewModel.article.title)
                             .font(.title)
@@ -130,7 +139,7 @@ struct ArticleDetailView: View {
                     }
                     .padding(.horizontal)
                 }
-                .background(Color.white)
+                .background(ColorSet.white)
             }
         }
         .safeAreaPadding(.bottom, 36)
@@ -204,14 +213,11 @@ struct ArticleDetailView: View {
                 .padding(.bottom, 20)
                 .padding(.top, 12)
                 .padding(.horizontal, 28)
-                .background(Color.white)
+                .background(ColorSet.white)
                 .overlay(Rectangle().stroke(ColorSet.blue, lineWidth: 2))
             }
                 .ignoresSafeArea(edges: .bottom)
         )
-//        .safeAreaInset(edge: .bottom, spacing: 0){
-//            CustomAppBar()
-//        }
         .toolbarBackground(ColorSet.blue, for: .navigationBar)
         .toolbarBackgroundVisibility(.visible, for: .navigationBar)
         .navigationBarBackButtonHidden(true)

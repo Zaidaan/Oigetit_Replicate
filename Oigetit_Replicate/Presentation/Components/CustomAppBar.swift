@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct CustomAppBar: View {
+    @Environment(\.colorScheme) var colorScheme
     var body: some View {
         VStack{
             ZStack{
@@ -104,7 +105,7 @@ struct CustomAppBar: View {
                 }
                 .padding(.vertical, 4)
                 .padding(.horizontal, 10)
-                .background(Color.white)
+                .background(colorScheme == .light ? ColorSet.gray : ColorSet.white)
                 .clipShape(Capsule())
                 
                 Spacer()
@@ -124,7 +125,7 @@ struct CustomAppBar: View {
         }
         .padding(.horizontal)
         .padding(.bottom, 8)
-        .background(ColorSet.blue.ignoresSafeArea(edges: .top))
+        .background((colorScheme == .light ? ColorSet.blue : ColorSet.backgroundGray).ignoresSafeArea(edges: .top))
         
     }
 }

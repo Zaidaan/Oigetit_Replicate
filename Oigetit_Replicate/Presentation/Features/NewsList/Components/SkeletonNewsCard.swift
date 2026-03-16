@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SkeletonNewsCard: View {
+    @Environment(\.colorScheme) var colorScheme
     @State var isPulsing: Bool = false
     
     var body: some View {
@@ -30,7 +31,7 @@ struct SkeletonNewsCard: View {
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 8)
-        .background(Color.white.opacity(0.5))
+        .background(colorScheme == .light ? ColorSet.white.opacity(0.5) : ColorSet.white)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .opacity(isPulsing ? 0.5 : 1.0)
         .animation(.easeInOut(duration: 1.0).repeatForever(autoreverses: true), value: isPulsing)

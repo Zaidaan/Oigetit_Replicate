@@ -77,6 +77,7 @@ struct NewsListView: View {
         
         .onAppear {
             // simulating fetch loading
+            viewModel.isLoading = true
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                 viewModel.updateArticles(category: viewModel.selectedCategoryId)
                 viewModel.isLoading = false

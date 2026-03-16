@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct AppRouterView: View {
+    @Environment(\.colorScheme) var colorScheme
     @StateObject private var router = AppRouter()
     
     private var previewPage: Page?
@@ -21,17 +22,17 @@ struct AppRouterView: View {
             router.build(page: previewPage ?? .newsList(category: "breaking"))
                 .navigationDestination(for: Page.self) { page in
                     router.build(page: page)
-                        .background(ColorSet.gray)
+                        .background(colorScheme == .light ? ColorSet.gray : ColorSet.backgroundGray)
                 }
                 .toolbarBackgroundVisibility(.hidden, for: .navigationBar)
-                .background(ColorSet.gray)
+                .background(colorScheme == .light ? ColorSet.gray : ColorSet.backgroundGray)
             
                 .sheet(item: $router.sheet){ sheet in
                     router.build(sheet: sheet)
                         .presentationDetents(router.detents ?? [])
                         .presentationCornerRadius(16)
                         .presentationDragIndicator(.hidden)
-                        .presentationBackground(Color.white)
+                        .presentationBackground(ColorSet.white)
                 }
                 .fullScreenCover(item: $router.fullScreenCover){ fullScreenCover in
                     router.build(fullScreenCover: fullScreenCover)
@@ -40,6 +41,5 @@ struct AppRouterView: View {
                 
         }
         .environmentObject(router)
-        .preferredColorScheme(ColorScheme.light)
     }
 }

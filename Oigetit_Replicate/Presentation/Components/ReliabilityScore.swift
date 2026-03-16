@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ReliabilityScore: View {
+    @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var router: AppRouter
     
     var score: Int
@@ -35,9 +36,9 @@ struct ReliabilityScore: View {
                 }
                 
                 HStack{
-                    PercentageDisplay(score: animatedScore, width: width, scoreColor: scoreAttributes.0)
+                    PercentageDisplay(score: animatedScore, width: width, scoreColor: colorScheme == .light ? scoreAttributes.0 : ColorSet.scoreOutline)
                         .fixedSize(horizontal: true, vertical: false)
-                        .foregroundStyle(Color.white)
+                        .foregroundStyle(colorScheme == .light ? Color.white : scoreAttributes.0)
                         .font(.system(size: 24, weight: .medium))
                 }
                 .padding(.leading, 23)

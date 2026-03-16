@@ -67,7 +67,7 @@ struct SentimentRateInfoModal: View {
                 .padding(.top,16)
                 .padding(.bottom, 32)
                 .padding(.horizontal,20)
-                .background(Color.white)
+                .background(ColorSet.white)
                 .clipShape(RoundedRectangle(cornerRadius: 12))
             }
             .padding(.horizontal, 44)

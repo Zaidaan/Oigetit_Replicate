@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct CategoryChip: View {
+    @Environment(\.colorScheme) var colorScheme
+    
     let newsCategory: NewsCategory
     @Binding var selectedCategoryId: String
     let handleSelection: (String) -> Void
@@ -21,7 +23,9 @@ struct CategoryChip: View {
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .frame(width: 25, height: 30)
-                .foregroundStyle(Color.black.opacity(0.3))
+                .foregroundStyle(
+                    isSelected ? (colorScheme == .light ? Color.black.opacity(0.3) : Color.white) : (colorScheme == .light ? Color.black.opacity(0.3) : ColorSet.darkGray)
+                )
                 .fontWeight(Font.Weight.ultraLight)
             Text(newsCategory.topicTitle)
                 .font(.system(size: 11, weight: .regular))
@@ -31,7 +35,7 @@ struct CategoryChip: View {
                 
         }
         .frame(width: 70, height: 60)
-        .background(isSelected ? ColorSet.blue.opacity(0.6) : Color.white)
+        .background(isSelected ? ColorSet.blue.opacity(0.6) : ColorSet.white)
         .clipShape(RoundedRectangle(cornerRadius: 8))
         .onTapGesture {
             selectedCategoryId = newsCategory.id
