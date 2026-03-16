@@ -7,4 +7,5 @@
 
 enum UserDefaultsKey {
     static let isShowHomeModal: String = "com.oigetit-replicate.isShow-home-modal"
+    static let isDarkModeOn: String = "com.oigetit-replicate.isDark-mode-on"
 }

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CustomAppBar: View {
     @Environment(\.colorScheme) var colorScheme
+    @AppStorage("isDarkModeOn") var isDarkModeOn: Bool = false
     var body: some View {
         VStack{
             ZStack{
@@ -110,15 +111,18 @@ struct CustomAppBar: View {
                 
                 Spacer()
                 
+                
                 Button(
-                    action: {}, // need implementation
+                    action: {
+                        isDarkModeOn.toggle()
+                    }, // need implementation
                     label: {
-                        Image(systemName: IconSet.video)
+                        Image(systemName: colorScheme == .light ? "moon" : "moon.fill")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 30)
                             .fontWeight(Font.Weight.light)
-                            .foregroundStyle(Color.white)
+                            .foregroundStyle(colorScheme == .light ? Color.white : ColorSet.blue)
                     }
                 )
             }

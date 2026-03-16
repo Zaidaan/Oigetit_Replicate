@@ -11,6 +11,7 @@ struct ArticleDetailView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var router: AppRouter
     @StateObject var viewModel: ArticleDetailViewModel
+    @AppStorage("isDarkModeOn") var isDarkModeOn: Bool = false
     
     @State var isLiked: Bool = false
     @State var isSaved: Bool = false
@@ -230,6 +231,28 @@ struct ArticleDetailView: View {
                     Image(systemName: "chevron.left")
                         .foregroundStyle(Color.white)
                 }
+            }
+            .sharedBackgroundVisibility(.hidden)
+            ToolbarItem(placement: .topBarTrailing) {
+                Button(
+                    action: {
+                        isDarkModeOn.toggle()
+                    },
+                    label: {
+                        Image(systemName: colorScheme == .light ? "moon" : "moon.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 30)
+                            .fontWeight(Font.Weight.light)
+                            .foregroundStyle(colorScheme == .light ? Color.white : ColorSet.blueButton)
+                            
+                    }
+                )
+//                .padding()
+                .overlay(
+                    Circle()
+                        .stroke(colorScheme == .light ? Color.clear : ColorSet.blueButton, lineWidth: 2)
+                )
             }
             .sharedBackgroundVisibility(.hidden)
             ToolbarItem(placement: .principal) {
