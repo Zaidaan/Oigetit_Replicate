@@ -16,7 +16,8 @@ class NewsListViewModel: ObservableObject {
     @Published var articles: [Article] = []
     @Published var isLoading: Bool = false
     
-    @Published var isShowModal = false
+    @Published var isShowedModal = false
+    
     @Published var isShowSentiment = false
     
     private let networkMonitor = NWPathMonitor()
@@ -26,7 +27,6 @@ class NewsListViewModel: ObservableObject {
     init(category: String) {
         checkInternetConnection()
         updateArticles(category: category)
-        print(articles)
     }
     
     func checkInternetConnection() {

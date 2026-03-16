@@ -25,9 +25,15 @@ class IconSet {
     
     // article interaction icons
     static let like                     = "hand.thumbsup"
+    static let likeFill                 = "hand.thumbsup.fill"
     static let comment                  = "bubble"
     static let share                    = "arrowshape.turn.up.forward"
     static let more                     = "ellipsis"
+    static let saveForLater             = "star.fill"
+    static let shareGlobe               = "globe.europe.africa.fill"
+    static let rateInfo                 = "shield.fill"
+    static let reportIssue              = "exclamationmark.bubble.fill"
+    static let save                     = "bookmark"
     
     // news category icons
     static let breakingNews             = "globe"
@@ -55,6 +61,8 @@ class IconSet {
     static let magnifyingGlass          = "magnifyingglass"
     static let chevronDown              = "chevron.down"
     static let menu                     = "line.3.horizontal"
+    
+    
 }
 
 class ImageSet {
@@ -74,6 +82,8 @@ class ColorSet {
     
     // component color
     static let blueButton               = Color("blueButton")
+    static let blueLikeButton           = Color("blueLikeButton")
+    static let saveButton               = Color("saveButton")
 }
 
 
