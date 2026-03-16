@@ -21,6 +21,18 @@ enum Page: Hashable, Identifiable {
     
 }
 
+enum Sheet: Hashable, Identifiable {
+    case articleCommentSheet
+    case moreActionSheet(article: Article)
+    
+    var id: String {
+        switch self {
+        case .articleCommentSheet: return "Article Comment Sheet"
+        case .moreActionSheet: return "More Action Sheet"
+        }
+    }
+}
+
 enum FullScreenCover: Hashable, Identifiable{
     case reliabilityRateInfoModal
     case sentimentRateInfoModal
@@ -37,6 +49,8 @@ enum FullScreenCover: Hashable, Identifiable{
 
 class AppRouter: ObservableObject {
     @Published var path = NavigationPath()
+    @Published var sheet: Sheet?
+    @Published var detents: Set<PresentationDetent>?
     @Published var fullScreenCover: FullScreenCover?
     @Published var isPresentFullScreenCover: Bool = false
     
@@ -58,12 +72,21 @@ class AppRouter: ObservableObject {
         path.append(Page.newsList(category: "breaking"))
     }
     
+    func present(sheet: Sheet, detents: Set<PresentationDetent>) {
+        self.sheet = sheet
+        self.detents = detents
+    }
+    
     func present(fullScreenCover: FullScreenCover) {
         var transaction = Transaction()
         transaction.disablesAnimations = true
         withTransaction(transaction){
             self.fullScreenCover = fullScreenCover
         }
+    }
+    
+    func dismissSheet() {
+        self.sheet = nil
     }
     
     func dismissFullScreenCover() {
@@ -82,6 +105,17 @@ class AppRouter: ObservableObject {
         case .articleDetail(let article):
             ArticleDetailView(article: article)
         }
+    }
+    
+    @ViewBuilder
+    func build(sheet: Sheet) -> some View {
+        switch sheet {
+        case .articleCommentSheet:
+            ArticleCommentSheet()
+        case .moreActionSheet(let article):
+            MoreActionSheet(article: article)
+        }
+            
     }
     
     @ViewBuilder

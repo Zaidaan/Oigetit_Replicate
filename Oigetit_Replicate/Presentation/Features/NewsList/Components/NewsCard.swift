@@ -15,6 +15,8 @@ struct NewsCard: View {
     @State private var hasMediaLoaded: Bool = false
     @State private var isMediaVisible: Bool = true
     
+    @State private var isLiked: Bool = false // need data persistent implementation for user interaction
+    
     var body: some View {
         let sentiment = identifySentiment(sentiment: article.score.sentiment)
         VStack(alignment: .leading, spacing: 8){
@@ -123,18 +125,23 @@ struct NewsCard: View {
                 
                 HStack(alignment: .center, spacing: 16) {
                     Button(
-                        action: {},
+                        action: {
+                            isLiked.toggle()
+                        },
                         label: {
-                            Image(systemName: IconSet.like)
+                            Image(systemName: isLiked ? IconSet.likeFill : IconSet.like)
                                 .resizable()
                                 .aspectRatio(1/1, contentMode: .fit)
                                 .frame(width: 18)
                                 .fontWeight(Font.Weight.light)
+                                .foregroundStyle(isLiked ? ColorSet.blueLikeButton : Color.gray)
                         }
                     )
                     
                     Button(
-                        action: {},
+                        action: {
+                            router.present(sheet: .articleCommentSheet, detents: [.fraction(0.5), .large])
+                        },
                         label: {
                             Image(systemName: IconSet.comment)
                                 .resizable()
@@ -144,19 +151,19 @@ struct NewsCard: View {
                         }
                     )
                     
-                    Button(
-                        action: {},
-                        label: {
-                            Image(systemName: IconSet.share)
-                                .resizable()
-                                .aspectRatio(1/1, contentMode: .fit)
-                                .frame(width: 18)
-                                .fontWeight(Font.Weight.light)
-                        }
-                    )
+                    
+                    ShareLink(item: article.title){
+                        Image(systemName: IconSet.share)
+                            .resizable()
+                            .aspectRatio(1/1, contentMode: .fit)
+                            .frame(width: 18)
+                            .fontWeight(Font.Weight.light)
+                    }
                     
                     Button(
-                        action: {},
+                        action: {
+                            router.present(sheet: .moreActionSheet(article: article), detents: [.fraction(0.4)])
+                        },
                         label: {
                             Image(systemName: IconSet.more)
                                 .resizable()

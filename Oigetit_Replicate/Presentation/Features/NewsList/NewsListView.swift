@@ -73,23 +73,26 @@ struct NewsListView: View {
         }
         .safeAreaInset(edge: .top){
             CustomAppBar()
-                
         }
-
+        
         .onAppear {
+            // simulating fetch loading
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                viewModel.updateArticles(category: viewModel.selectedCategoryId)
+                viewModel.isLoading = false
+            }
+            
             let isPresentHomeModal = UserDefaults.standard.bool(forKey: UserDefaultsKey.isShowHomeModal)
-            if isPresentHomeModal == true {
+            if isPresentHomeModal == true && viewModel.isShowedModal == false {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2.0){
                     router.present(fullScreenCover: .reliabilityRateInfoModal)
+                    viewModel.isShowedModal = true
                 }
             }
             
-            // simulating fetch loading
-            //            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-            //                viewModel.updateArticles(category: viewModel.selectedCategoryId)
-            //                viewModel.isLoading = false
-            //            }
+            
         }
+        
         .ignoresSafeArea(edges: .bottom)
     }
 }

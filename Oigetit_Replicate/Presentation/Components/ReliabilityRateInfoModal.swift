@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ReliabilityRateInfoModal: View {
-    @EnvironmentObject var router: AppRouter
+    @Environment(\.dismiss) var dismiss
     
     @State var isDontShowChecked: Bool = !UserDefaults.standard.bool(forKey: UserDefaultsKey.isShowHomeModal)
     @State var contentOpacity = 0.0
@@ -25,7 +25,7 @@ struct ReliabilityRateInfoModal: View {
                     }
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
-                        router.dismissFullScreenCover()
+                        dismiss()
                     }
                 }
                 
@@ -41,7 +41,7 @@ struct ReliabilityRateInfoModal: View {
                                 }
                                 
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
-                                    router.dismissFullScreenCover()
+                                    dismiss()
                                 }
                                 
                             } label: {

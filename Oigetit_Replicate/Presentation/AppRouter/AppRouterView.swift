@@ -26,6 +26,13 @@ struct AppRouterView: View {
                 .toolbarBackgroundVisibility(.hidden, for: .navigationBar)
                 .background(ColorSet.gray)
             
+                .sheet(item: $router.sheet){ sheet in
+                    router.build(sheet: sheet)
+                        .presentationDetents(router.detents ?? [])
+                        .presentationCornerRadius(16)
+                        .presentationDragIndicator(.hidden)
+                        .presentationBackground(Color.white)
+                }
                 .fullScreenCover(item: $router.fullScreenCover){ fullScreenCover in
                     router.build(fullScreenCover: fullScreenCover)
                         .presentationBackground(.clear)

@@ -11,6 +11,9 @@ struct ArticleDetailView: View {
     @EnvironmentObject var router: AppRouter
     @StateObject var viewModel: ArticleDetailViewModel
     
+    @State var isLiked: Bool = false
+    @State var isSaved: Bool = false
+    
     init(article: Article) {
         _viewModel = StateObject(wrappedValue: ArticleDetailViewModel(article: article))
     }
@@ -33,18 +36,19 @@ struct ArticleDetailView: View {
                         .frame(width: 25)
                         .foregroundStyle(sentiment.color)
                         .shadow(color: sentiment.color, radius: 0.5)
+                    
                     Text("Sentiment")
                         .font(Font.caption)
                         .fontWeight(.semibold)
-                    Button{
-                        
-                    } label: {
-                        Image(systemName: "questionmark.circle")
-                            .resizable()
-                            .aspectRatio(1/1, contentMode: .fit)
-                            .frame(width: 15)
-                            .foregroundStyle(Color.gray)
-                    }
+                    
+                    Image(systemName: "questionmark.circle")
+                        .resizable()
+                        .aspectRatio(1/1, contentMode: .fit)
+                        .frame(width: 15)
+                        .foregroundStyle(Color.gray)
+                }
+                .onTapGesture {
+                    router.present(fullScreenCover: .sentimentRateInfoModal)
                 }
             }
             .padding(.vertical, 8)
@@ -129,13 +133,83 @@ struct ArticleDetailView: View {
                 .background(Color.white)
             }
         }
-        .ignoresSafeArea(edges: .bottom)
+        .safeAreaPadding(.bottom, 36)
         .onAppear{
             Task {
                 viewModel.content = await viewModel.fetchContent()
             }
         }
-//        .safeAreaInset(edge: .top, spacing: 0){
+        .overlay(
+            VStack {
+                Spacer()
+                HStack{
+                    Button(
+                        action: {
+                            isLiked.toggle()
+                        },
+                        label: {
+                            Image(systemName: isLiked ? IconSet.likeFill : IconSet.like)
+                                .resizable()
+                                .aspectRatio(1/1, contentMode: .fit)
+                                .frame(width: 35)
+                                .fontWeight(Font.Weight.semibold)
+                                .foregroundStyle(isLiked ? ColorSet.blueLikeButton : ColorSet.blue)
+                        }
+                    )
+                    
+                    Spacer()
+                    
+                    Button(
+                        action: {
+                            router.present(sheet: .articleCommentSheet, detents: [.fraction(0.5), .large])
+                        },
+                        label: {
+                            Image(systemName: IconSet.comment)
+                                .resizable()
+                                .aspectRatio(1/1, contentMode: .fit)
+                                .frame(width: 32)
+                                .fontWeight(Font.Weight.semibold)
+                                .foregroundStyle(ColorSet.blue)
+                        }
+                    )
+                    
+                    Spacer()
+                    
+                    ShareLink(item: viewModel.article.title){
+                        Image(systemName: "square.and.arrow.up")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 32, height: 37)
+                            .fontWeight(Font.Weight.semibold)
+                            .foregroundStyle(ColorSet.blue)
+                    }
+                    
+                    Spacer()
+                    
+                    Button(
+                        action: {
+                            isSaved.toggle()
+                        },
+                        label: {
+                            Image(systemName: isSaved ? "bookmark.fill" : IconSet.save)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 30, height: 35)
+                                .fontWeight(Font.Weight.semibold)
+                                .foregroundStyle(isSaved ? ColorSet.saveButton : ColorSet.blue)
+                        }
+                    )
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.bottom, 20)
+                .padding(.top, 12)
+                .padding(.horizontal, 28)
+                .background(Color.white)
+                .overlay(Rectangle().stroke(ColorSet.blue, lineWidth: 2))
+            }
+                .ignoresSafeArea(edges: .bottom)
+        )
+//        .safeAreaInset(edge: .bottom, spacing: 0){
 //            CustomAppBar()
 //        }
         .toolbarBackground(ColorSet.blue, for: .navigationBar)
