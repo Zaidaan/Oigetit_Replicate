@@ -11,6 +11,8 @@ struct AppRouterView: View {
     @Environment(\.colorScheme) var colorScheme
     @StateObject private var router = AppRouter()
     
+    @AppStorage("isDarkModeOn") var isDarkModeOn: Bool = false
+    
     private var previewPage: Page?
     
     init(previewPage: Page? = nil){
@@ -41,5 +43,6 @@ struct AppRouterView: View {
                 
         }
         .environmentObject(router)
+        .preferredColorScheme(isDarkModeOn ? .dark : .light)
     }
 }
