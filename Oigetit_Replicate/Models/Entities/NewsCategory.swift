@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct NewsCategory: Identifiable {
+struct NewsCategory: Hashable, Identifiable {
     var topicTitle: String
     var topicIcon: String
     

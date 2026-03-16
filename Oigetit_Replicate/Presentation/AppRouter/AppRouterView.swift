@@ -19,12 +19,17 @@ struct AppRouterView: View {
     var body: some View {
         NavigationStack(path: $router.path){
             router.build(page: previewPage ?? .newsList(category: "breaking"))
-                .navigationDestination(for: Page.self) {page in
+                .navigationDestination(for: Page.self) { page in
                     router.build(page: page)
                         .background(ColorSet.gray)
                 }
                 .toolbarBackgroundVisibility(.hidden, for: .navigationBar)
-            .background(ColorSet.gray)
+                .background(ColorSet.gray)
+            
+                .fullScreenCover(item: $router.fullScreenCover){ fullScreenCover in
+                    router.build(fullScreenCover: fullScreenCover)
+                        .presentationBackground(.clear)
+                }
                 
         }
         .environmentObject(router)

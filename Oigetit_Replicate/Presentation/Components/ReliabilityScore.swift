@@ -8,13 +8,15 @@
 import SwiftUI
 
 struct ReliabilityScore: View {
+    @EnvironmentObject var router: AppRouter
+    
     var score: Int
     var width: CGFloat = 1
     
-    private var scoreAttributes: (Color,String) {
-        if score > 64 {return (ColorSet.green, IconSet.shieldWithCheckmark)}
-        if score > 34 {return (ColorSet.orange, IconSet.shieldOutline)}
-        else {return (ColorSet.red, IconSet.shieldWithXmark)}
+    private var scoreAttributes: (Color,String,String) {
+        if score > 64 {return (ColorSet.green, "Real News", IconSet.shieldWithCheckmark)}
+        if score > 34 {return (ColorSet.orange, "Mostly Real", IconSet.shieldOutline)}
+        else {return (ColorSet.red, "Fake News", IconSet.shieldWithXmark)}
     }
     
     @State var animatedScore: Double = 0
@@ -23,7 +25,7 @@ struct ReliabilityScore: View {
         HStack {
             ZStack(alignment: .leading){
                 HStack {
-                    Image(systemName: scoreAttributes.1)
+                    Image(systemName: scoreAttributes.2)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 30)
@@ -45,6 +47,9 @@ struct ReliabilityScore: View {
             withAnimation(.easeInOut(duration: 1.0).delay(0.2)) {
                 self.animatedScore = Double(score)
             }
+        }
+        .onTapGesture {
+            router.present(fullScreenCover: .reliabilityModal(score: score))
         }
     }
 }

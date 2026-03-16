@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-struct RateInfoModal: View {
-    @Binding var isShowModal: Bool
+struct ReliabilityRateInfoModal: View {
+    @EnvironmentObject var router: AppRouter
     
-    @State var isDontShowChecked: Bool = false
+    @State var isDontShowChecked: Bool = !UserDefaults.standard.bool(forKey: UserDefaultsKey.isShowHomeModal)
     @State var contentOpacity = 0.0
     
     var body: some View {
@@ -19,6 +19,15 @@ struct RateInfoModal: View {
                 .ignoresSafeArea(edges: .all)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .foregroundStyle(Color.black.opacity(0.3))
+                .onTapGesture {
+                    withAnimation(.easeInOut(duration: 0.5)){
+                        contentOpacity = 0.0
+                    }
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
+                        router.dismissFullScreenCover()
+                    }
+                }
                 
             
             VStack {
@@ -27,17 +36,12 @@ struct RateInfoModal: View {
                         HStack {
                             Spacer()
                             Button{
-                                
                                 withAnimation(.easeInOut(duration: 0.5)){
                                     contentOpacity = 0.0
                                 }
                                 
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
-                                    var transaction = Transaction()
-                                    transaction.disablesAnimations = true
-                                    withTransaction(transaction) {
-                                        isShowModal = false
-                                    }
+                                    router.dismissFullScreenCover()
                                 }
                                 
                             } label: {

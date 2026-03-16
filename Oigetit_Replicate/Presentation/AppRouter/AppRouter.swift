@@ -21,8 +21,24 @@ enum Page: Hashable, Identifiable {
     
 }
 
+enum FullScreenCover: Hashable, Identifiable{
+    case reliabilityRateInfoModal
+    case sentimentRateInfoModal
+    case reliabilityModal(score: Int)
+    
+    var id: String {
+        switch self {
+        case .reliabilityRateInfoModal: return "Reliability Rate Info Modal"
+        case .sentimentRateInfoModal: return "Sentiment Rate Info Modal"
+        case .reliabilityModal: return "Reliability Rate Modal"
+        }
+    }
+}
+
 class AppRouter: ObservableObject {
     @Published var path = NavigationPath()
+    @Published var fullScreenCover: FullScreenCover?
+    @Published var isPresentFullScreenCover: Bool = false
     
     func push(_ page: Page){
         path.append(page)
@@ -42,6 +58,22 @@ class AppRouter: ObservableObject {
         path.append(Page.newsList(category: "breaking"))
     }
     
+    func present(fullScreenCover: FullScreenCover) {
+        var transaction = Transaction()
+        transaction.disablesAnimations = true
+        withTransaction(transaction){
+            self.fullScreenCover = fullScreenCover
+        }
+    }
+    
+    func dismissFullScreenCover() {
+        var transaction = Transaction()
+        transaction.disablesAnimations = true
+        withTransaction(transaction){
+            self.fullScreenCover = nil
+        }
+    }
+    
     @ViewBuilder
     func build(page: Page) -> some View {
         switch page {
@@ -49,6 +81,18 @@ class AppRouter: ObservableObject {
             NewsListView(category: category)
         case .articleDetail(let article):
             ArticleDetailView(article: article)
+        }
+    }
+    
+    @ViewBuilder
+    func build(fullScreenCover: FullScreenCover) -> some View {
+        switch fullScreenCover {
+        case .reliabilityRateInfoModal:
+            ReliabilityRateInfoModal()
+        case .sentimentRateInfoModal:
+            SentimentRateInfoModal()
+        case .reliabilityModal(let score):
+            ReliabilityModal(score: score)
         }
     }
 }

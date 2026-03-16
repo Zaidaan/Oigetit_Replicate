@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct NewsCard: View {
+    @EnvironmentObject var router: AppRouter
+    
     let article: Article
     
     @State private var hasMediaLoaded: Bool = false
@@ -25,6 +27,7 @@ struct NewsCard: View {
                             .fontWeight(Font.Weight.medium)
                             .foregroundStyle(Color.gray)
                     }
+                    
                     Text(article.title)
                         .font(Font.headline)
                         .lineLimit(3)
@@ -98,50 +101,71 @@ struct NewsCard: View {
                 HStack(spacing: 6){
                     Image(sentiment.icon)
                         .resizable()
+                        .renderingMode(.template)
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 20)
+                        .frame(width: 18)
                         .foregroundStyle(sentiment.color)
+                        .shadow(color: sentiment.color, radius: 0.5)
                     Text("Sentiment")
                         .font(Font.caption)
                         .fontWeight(.medium)
-                    Button{
-                        
-                    } label: {
-                        Image(systemName: "questionmark.circle")
-                            .resizable()
-                            .aspectRatio(1/1, contentMode: .fit)
-                            .frame(width: 12)
-                            .foregroundStyle(Color.gray)
-                    }
+                    Image(systemName: "questionmark.circle")
+                        .resizable()
+                        .aspectRatio(1/1, contentMode: .fit)
+                        .frame(width: 12)
+                        .foregroundStyle(Color.gray)
+                }
+                .onTapGesture {
+                    router.present(fullScreenCover: .sentimentRateInfoModal)
                 }
                 
                 Spacer()
                 
                 HStack(alignment: .center, spacing: 16) {
-                    Image(systemName: IconSet.like)
-                        .resizable()
-                        .aspectRatio(1/1, contentMode: .fit)
-                        .frame(width: 20)
-                        .fontWeight(Font.Weight.light)
+                    Button(
+                        action: {},
+                        label: {
+                            Image(systemName: IconSet.like)
+                                .resizable()
+                                .aspectRatio(1/1, contentMode: .fit)
+                                .frame(width: 18)
+                                .fontWeight(Font.Weight.light)
+                        }
+                    )
                     
-                    Image(systemName: IconSet.comment)
-                        .resizable()
-                        .aspectRatio(1/1, contentMode: .fit)
-                        .frame(width: 20)
-                        .fontWeight(Font.Weight.light)
+                    Button(
+                        action: {},
+                        label: {
+                            Image(systemName: IconSet.comment)
+                                .resizable()
+                                .aspectRatio(1/1, contentMode: .fit)
+                                .frame(width: 18)
+                                .fontWeight(Font.Weight.light)
+                        }
+                    )
                     
-                    Image(systemName: IconSet.share)
-                        .resizable()
-                        .aspectRatio(1/1, contentMode: .fit)
-                        .frame(width: 20)
-                        .fontWeight(Font.Weight.light)
+                    Button(
+                        action: {},
+                        label: {
+                            Image(systemName: IconSet.share)
+                                .resizable()
+                                .aspectRatio(1/1, contentMode: .fit)
+                                .frame(width: 18)
+                                .fontWeight(Font.Weight.light)
+                        }
+                    )
                     
-                    Image(systemName: IconSet.more)
-                        .resizable()
-                        .rotationEffect(Angle(degrees: 90))
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 20)
-                        .fontWeight(Font.Weight.black)
+                    Button(
+                        action: {},
+                        label: {
+                            Image(systemName: IconSet.more)
+                                .resizable()
+                                .rotationEffect(Angle(degrees: 90))
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 18)
+                                .fontWeight(Font.Weight.black)
+                        }
+                    )
                 }
                 
                 .foregroundStyle(Color.gray)
