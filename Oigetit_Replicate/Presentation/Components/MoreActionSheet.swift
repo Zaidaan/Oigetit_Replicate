@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MoreActionSheet: View {
     
+    @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var router: AppRouter
     
     @State var isShowRateInfo: Bool = false
@@ -54,8 +55,8 @@ struct MoreActionSheet: View {
                             .fontWeight(.medium)
                         Spacer()
                     }
-                    .foregroundStyle(Color.black)
                 }
+                .foregroundStyle(colorScheme == .light ? .black : .white)
                 
                 Button(
                     action: {},
@@ -69,9 +70,9 @@ struct MoreActionSheet: View {
                                 .fontWeight(.medium)
                             Spacer()
                         }
-                        .foregroundStyle(Color.black)
                     }
                 )
+                .foregroundStyle(colorScheme == .light ? .black : .white)
                 
                 Button(
                     action: {
@@ -91,9 +92,9 @@ struct MoreActionSheet: View {
                                 .fontWeight(.medium)
                             Spacer()
                         }
-                        .foregroundStyle(Color.black)
                     }
                 )
+                .foregroundStyle(colorScheme == .light ? .black : .white)
                 
                 Button(
                     action: {},
@@ -107,9 +108,9 @@ struct MoreActionSheet: View {
                                 .fontWeight(.medium)
                             Spacer()
                         }
-                        .foregroundStyle(Color.black)
                     }
                 )
+                .foregroundStyle(colorScheme == .light ? .black : .white)
             }
             
             Spacer()
@@ -126,9 +127,9 @@ struct MoreActionSheet: View {
                     Text("Close")
                         .frame(maxWidth: .infinity)
                         .fontWeight(.medium)
-                        .foregroundStyle(Color.black)
                 }
             )
+            .foregroundStyle(colorScheme == .light ? .black : .white)
             
         }
         .padding(.vertical, 24)

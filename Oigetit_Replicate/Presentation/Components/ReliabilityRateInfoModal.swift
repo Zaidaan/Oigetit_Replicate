@@ -102,7 +102,7 @@ struct ReliabilityRateInfoModal: View {
                 }
                 .padding(.vertical,12)
                 .padding(.horizontal,20)
-                .background(Color.white)
+                .background(ColorSet.white)
                 .clipShape(RoundedRectangle(cornerRadius: 12))
             }
             .padding(.horizontal, 20)

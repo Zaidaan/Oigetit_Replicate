@@ -72,18 +72,22 @@ class ImageSet {
 class ColorSet {
     
     // neutral color
-    static let gray                     = Color("Gray")
+    static let gray                     = Color("Grayish")
+    static let darkGray                 = Color("DarkGrayish")
+    static let white                    = Color("Whitish")
     
     // primary color
-    static let blue                     = Color("Blue")
-    static let green                    = Color("Green")
-    static let red                      = Color("Red")
-    static let orange                   = Color("Orange")
+    static let blue                     = Color("Blueish")
+    static let green                    = Color("Greenish")
+    static let red                      = Color("Reddish")
+    static let orange                   = Color("Orangish")
     
     // component color
     static let blueButton               = Color("blueButton")
     static let blueLikeButton           = Color("blueLikeButton")
     static let saveButton               = Color("saveButton")
+    static let backgroundGray           = Color("backgroundGray")
+    static let scoreOutline             = Color("scoreOutline")
 }
 
 
